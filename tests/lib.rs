@@ -7,7 +7,7 @@ use fluent_langneg::convert_vec_str_to_langids_lossy;
 use fluent_langneg::negotiate_languages;
 use fluent_langneg::parse_accepted_languages;
 use fluent_langneg::NegotiationStrategy;
-use icu_locid::{langid, locale, LanguageIdentifier, Locale};
+use icu_locale_core::{langid, locale, LanguageIdentifier, Locale};
 
 use serde::{Deserialize, Serialize};
 

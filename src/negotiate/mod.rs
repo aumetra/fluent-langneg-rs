@@ -14,7 +14,7 @@
 //! use fluent_langneg::negotiate_languages;
 //! use fluent_langneg::NegotiationStrategy;
 //! use fluent_langneg::convert_vec_str_to_langids_lossy;
-//! use icu_locid::LanguageIdentifier;
+//! use icu_locale_core::LanguageIdentifier;
 //!
 //! let requested = convert_vec_str_to_langids_lossy(&["pl", "fr", "en-US"]);
 //! let available = convert_vec_str_to_langids_lossy(&["it", "de", "fr", "en-GB", "en_US"]);
@@ -119,12 +119,12 @@
 //! ```
 //!
 
-use icu_locid::LanguageIdentifier;
+use icu_locale_core::LanguageIdentifier;
 
 #[cfg(not(feature = "cldr"))]
 mod likely_subtags;
 #[cfg(feature = "cldr")]
-use icu_locid_transform::{LocaleExpander, TransformResult};
+use icu_locale::{LocaleExpander, TransformResult};
 #[cfg(not(feature = "cldr"))]
 use likely_subtags::{LocaleExpander, TransformResult};
 
@@ -151,8 +151,8 @@ fn matches(
     range1: bool,
     range2: bool,
 ) -> bool {
-    ((range1 && lid1.language.is_empty())
-        || (range2 && lid2.language.is_empty())
+    ((range1 && lid1.language.as_str().is_empty())
+        || (range2 && lid2.language.as_str().is_empty())
         || lid1.language == lid2.language)
         && subtag_matches(&lid1.script, &lid2.script, range1, range2)
         && subtag_matches(&lid1.region, &lid2.region, range1, range2)
@@ -209,7 +209,7 @@ pub fn filter_matches<'a, R: 'a + AsRef<LanguageIdentifier>, A: 'a + AsRef<Langu
 
         // Per Unicode TR35, 4.4 Locale Matching, we don't add likely subtags to
         // requested locales, so we'll skip it from the rest of the steps.
-        if req.language.is_empty() {
+        if req.language.as_str().is_empty() {
             continue;
         }
 

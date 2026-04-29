@@ -8,7 +8,7 @@
 //! use fluent_langneg::NegotiationStrategy;
 //! use fluent_langneg::parse_accepted_languages;
 //! use fluent_langneg::convert_vec_str_to_langids_lossy;
-//! use icu_locid::LanguageIdentifier;
+//! use icu_locale_core::LanguageIdentifier;
 //!
 //! let requested = parse_accepted_languages("de-AT;0.9,de-DE;0.8,de;0.7;en-US;0.5");
 //! let available = convert_vec_str_to_langids_lossy(&["fr", "pl", "de", "en-US"]);
@@ -30,7 +30,7 @@
 //! language negotiation only uses the order of locales, not the weights.
 //!
 
-use icu_locid::LanguageIdentifier;
+use icu_locale_core::LanguageIdentifier;
 
 pub fn parse(s: &str) -> Vec<LanguageIdentifier> {
     s.split(',')

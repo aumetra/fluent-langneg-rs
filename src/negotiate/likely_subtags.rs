@@ -1,4 +1,4 @@
-use icu_locid::{
+use icu_locale_core::{
     langid,
     subtags::{language, region, Language, Region},
     LanguageIdentifier,
